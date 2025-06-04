@@ -73,7 +73,7 @@ const Home = () => {
           }}
         />
 
-        <Button variant="contained" color="primary" size="large" sx={{ mt: 1 }} onClick={() => {search===''? null:navigate(`/${search}`) }}>
+        <Button variant="contained" color="primary" size="large" sx={{ mt: 1 }} onClick={() => {search===''? null:navigate(`/address/${search}`) }}>
           Khám phá ngay
         </Button>
       </Stack>

@@ -1,8 +1,20 @@
-import { Box, Typography, Stack, Button } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Stack,
+  TextField,
+  InputAdornment,
+} from "@mui/material";
 import logo from "../../assets/blockchain.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import SearchIcon from "@mui/icons-material/Search";
 const Header = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const { address, txhash, block } = useParams();
+  const [search, setSearch] = useState("");
+  useEffect(()=>{setSearch("")},[address])
+
   return (
     <Box>
       <Typography
@@ -27,11 +39,16 @@ const Header = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          pl: 2,
-          pr: 2,
+          pl: 5,
+          pr: 5,
         }}
       >
-        <Box sx={{ display: "flex", gap: 1, alignItems: "center" }} onClick={() => { navigate('/') }}>
+        <Box
+          sx={{ display: "flex", gap: 1, alignItems: "center" }}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
           <Box
             component={"img"}
             src={logo}
@@ -39,17 +56,64 @@ const Header = () => {
           />
           <Typography
             sx={{ fontSize: 26, fontWeight: "bold", cursor: "pointer" }}
-            onClick={() => { navigate('/') }}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             TraceX
           </Typography>
           <Typography>(Mạng thử nghiệm Sepolia)</Typography>
         </Box>
         {/* Navigation */}
-        <Stack direction="row" spacing={3} alignItems="center">
+        <Stack
+          direction="row"
+          spacing={3}
+          alignItems="center"
+          sx={{
+            ...((address || txhash || block) && { minWidth: "50%" }),
+          }}
+        >
+          {(address || txhash || block) && (
+            <TextField
+              placeholder="Tìm kiếm địa chỉ ví, giao dịch, token..."
+              variant="standard"
+              fullWidth
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  navigate(`/address/${search}`);
+                }
+              }}
+              sx={{
+                maxWidth: 400,
+                backgroundColor: "white",
+                borderRadius: 6,
+                boxShadow: 2,
+                padding: 1,
+                "&:hover": {
+                  color: "#1976d2",
+                  transform: "translateY(-1px)",
+                },
+              }}
+              InputProps={{
+                disableUnderline: true,
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon color="action" />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          )}
           {["Trang chủ", "Giới thiệu", "Bài viết"].map((item) => (
             <Typography
               key={item}
+              onClick={() => {
+                navigate("/");
+              }}
               sx={{
                 fontSize: 15,
                 fontWeight: 500,

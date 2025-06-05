@@ -51,11 +51,11 @@ const Address = () => {
         setIsLoad(true);
         const res = await walletApi.getByAddress(address);
         const resTxs = await walletApi.getTxHistory(address);
-        setData(res.data);
-        setTxs(resTxs.data.transactions);
+        setData(res?.data);
+        setTxs(resTxs?.data?.transactions);
       } catch (err) {
-        console.log(err.response.data);
-        setData(err.response.data);
+        console.log(err?.response?.data);
+        setData(err?.response?.data);
         setTxs([]);
       } finally {
         setIsLoad(false);
@@ -530,7 +530,7 @@ const Address = () => {
           Địa chỉ
         </Typography>
         <Typography color="#0784c3">
-          {data.address || `(${data?.error})`}
+          {data?.address || `(${data?.error? data.error : `Server mất kết nối, vui lòng thử lại sau ít phút`})`}
         </Typography>
       </Stack>
       <Stack
@@ -565,12 +565,12 @@ const Address = () => {
           </Typography>
           <Stack direction={"row"} gap={0.8} alignItems={"center"} pb={2}>
             <ImDiamonds />
-            <Typography fontSize={15}>{`${data.balance || 0} ETH`}</Typography>
+            <Typography fontSize={15}>{`${data?.balance || 0} ETH`}</Typography>
           </Stack>
           <Typography color="gray" fontSize={15}>
             Nonce
           </Typography>
-          <Typography fontSize={15}>{data.nonce || 0}</Typography>
+          <Typography fontSize={15}>{data?.nonce || 0}</Typography>
         </Paper>
         <Paper
           sx={{
@@ -672,22 +672,33 @@ const Address = () => {
           }}
         >
           <Typography pb={3} fontWeight={"bold"} fontSize={16}>
-            Thêm thông tin
+            Biểu đồ luồng giao dịch
           </Typography>
           <Typography color="gray" fontSize={15}>
-            GIAO DỊCH ĐƯỢC GỬI
+            SỐ LƯỢNG GIAO DỊCH
           </Typography>
           <Stack direction={"row"} gap={0.8} alignItems={"center"} pb={2}>
             <Typography
               fontSize={15}
-            >{`Đặt:5 giờ trước Đầu tiên: 2 ngày trước `}</Typography>
+            >{txs?.length}</Typography>
           </Stack>
           <Typography color="gray" fontSize={15}>
-            ĐƯỢC TÀI TRỢ BỞI
+            CHI TIẾT BIỂU ĐỒ
           </Typography>
-          <Typography color="lightblue" fontSize={15}>
-            0xCbF16FEd... D857d7E9c | 2 ngày trước
-          </Typography>
+          <Stack
+                    direction={"row"}
+                    gap={1}
+                    sx={{ cursor: "pointer" }}
+                    alignItems={"center"}
+                    onClick={() => {
+                      navigate(`/tx-graph/${address}`);
+                    }}
+                  >
+                    <Typography variant="body2" fontSize={15} color="#0784c3">
+                      Xem thêm chi tiết
+                    </Typography>
+                    <PiArrowUpRightBold style={{ color: "#0784c3" }} />
+                  </Stack>
         </Paper>
       </Stack>
       <Stack flex={10}>

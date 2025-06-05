@@ -1,6 +1,6 @@
-import { Box, Button, Link, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Paper, Stack, Typography } from "@mui/material";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useNavigate, useParams } from "react-router-dom";
 import walletApi from "../../api/walletApi";
@@ -82,15 +82,16 @@ const Address = () => {
       ),
       renderCell: (params) => {
         return (
-          <Link
-            href={`http://localhost:5173/tx/${params.id}`}
+          <Typography component={'span'}
+            onClick={()=>{navigate(`/tx/${params.id}`)}}
             sx={{
+              cursor:'pointer',
               textDecoration: "none",
               color: "#0784c3",
             }}
           >
             {params.id}
-          </Link>
+          </Typography>
         );
       },
     },
@@ -114,15 +115,16 @@ const Address = () => {
       renderHeader: () => <strong style={{ fontWeight: "bold" }}>Khối</strong>,
       renderCell: (params) => {
         return (
-          <Link
-            href={`http://localhost:5173/block/${params.value}`}
+          <Typography component={'span'}
+            onClick={()=>{navigate(`/block/${params.value}`)}}
             sx={{
+              cursor:'pointer',
               textDecoration: "none",
               color: "#0784c3",
             }}
           >
             {params.value}
-          </Link>
+          </Typography>
         );
       },
     },
@@ -145,15 +147,16 @@ const Address = () => {
       renderHeader: () => <strong style={{ fontWeight: "bold" }}>Từ</strong>,
       renderCell: (params) => {
         return (
-          <Link
-            href={`http://localhost:5173/address/${params.value}`}
+          <Typography component={'span'}
+            onClick={()=>{navigate(`/address/${params.value}`)}}
             sx={{
+              cursor:'pointer',
               textDecoration: "none",
               color: "#0784c3",
             }}
           >
             {params.value}
-          </Link>
+          </Typography>
         );
       },
     },
@@ -222,15 +225,16 @@ const Address = () => {
       renderHeader: () => <strong style={{ fontWeight: "bold" }}>Đến</strong>,
       renderCell: (params) => {
         return (
-          <Link
-            href={`http://localhost:5173/address/${params.value}`}
+          <Typography component={'span'}
+            onClick={()=>{navigate(`/address/${params.value}`)}}
             sx={{
+              cursor:'pointer',
               textDecoration: "none",
               color: "#0784c3",
             }}
           >
             {params.value}
-          </Link>
+          </Typography>
         );
       },
     },

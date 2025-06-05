@@ -84,7 +84,7 @@ const Header = () => {
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
-                  navigate(`/address/${search}`);
+                  search!=="" && navigate(`/address/${search}`);
                 }
               }}
               sx={{

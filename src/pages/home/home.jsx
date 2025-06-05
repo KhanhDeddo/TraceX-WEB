@@ -58,6 +58,11 @@ const Home = () => {
           fullWidth
           value={search}
           onChange={(e) => { setSearch(e.target.value) }}
+          onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  search!=="" && navigate(`/address/${search}`);
+                }
+              }}
           sx={{
             maxWidth: 500,
             backgroundColor: "white",
